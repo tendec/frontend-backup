@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-app-bar app color="white" dark>
+    <v-app-bar app color="white" height="88px">
       <div class="d-flex align-center">
         <v-img
           alt="Masking Icon"
@@ -8,7 +8,7 @@
           contain
           src="../assets/pic/masking-icon.png"
           transition="scale-transition"
-          width="40"
+          width="50"
         />
 
         <v-img
@@ -16,77 +16,111 @@
           class="shrink mt-1 hidden-sm-and-down"
           contain
           src="../assets/pic/masking-title.png"
-          width="250"
+          width="300"
         />
       </div>
 
       <v-spacer></v-spacer>
 
-      <v-btn to="/">
+      <v-btn to="/" plain class="text-capitalize button-navbar">
         <span>Login</span>
       </v-btn>
-      <v-btn to="/register">
+      <v-btn to="/register" plain class="text-capitalize button-navbar">
         <span>Register</span>
       </v-btn>
-      <v-btn>
-        <span>Language</span>
-      </v-btn>
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            plain
+            v-bind="attrs"
+            v-on="on"
+            class="text-capitalize button-navbar"
+          >
+            Language
+            <v-icon>mdi-menu-down</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item>
+            <span>English</span>
+          </v-list-item>
+          <v-list-item>
+            <span>日本語</span>
+          </v-list-item>
+          <v-list-item>
+            <span>Tiếng Việt</span>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
 
-    <v-card>
-      <v-form ref="form">
-        <v-card-title>Register</v-card-title>
-        <v-text-field
-          type="text"
-          label="Username *"
-          v-model="username"
-          :rules="[rules.requiredName]"
-          :error-messages="
-            takenUsername ? 'The name has already been taken.' : ''
-          "
-        ></v-text-field>
-        <v-text-field
-          type="email"
-          label="Email *"
-          v-model="email"
-          :rules="[rules.requiredEmail, rules.validEmail]"
-          :error-messages="
-            takenEmail ? 'The e-mail address has already been taken.' : ''
-          "
-        ></v-text-field>
-        <v-text-field
-          label="Password *"
-          v-model="password"
-          :append-icon="!eyePassword ? 'mdi-eye' : 'mdi-eye-off'"
-          @click:append="toggleEyePassword"
-          :type="!eyePassword ? 'text' : 'password'"
-          :rules="[
-            rules.requiredPassword,
-            rules.minLength,
-            rules.validPassword,
-            rules.matching(password, cfpassword),
-          ]"
-        ></v-text-field>
-        <v-text-field
-          label="Confirm Password *"
-          v-model="cfpassword"
-          :append-icon="!eyeCfPassword ? 'mdi-eye' : 'mdi-eye-off'"
-          @click:append="toggleEyeCfPassword"
-          :type="!eyeCfPassword ? 'text' : 'password'"
-        ></v-text-field>
-      </v-form>
-      <v-btn @click="registerBtnClick"><span>REGISTERr</span></v-btn>
-    </v-card>
+    <v-container class="d-flex flex-column align-center">
+      <v-card class="mt-1 mb-12" width="600px" elevation="3">
+        <v-form ref="form">
+          <v-card-title class="pa-5 card-title">Register</v-card-title>
+          <v-text-field
+            type="text"
+            label="Username *"
+            v-model="username"
+            :rules="[rules.requiredName]"
+            :error-messages="
+              takenUsername ? 'The name has already been taken.' : ''
+            "
+            class="mt-8 page-input"
+          ></v-text-field>
+          <v-text-field
+            type="email"
+            label="Email *"
+            v-model="email"
+            :rules="[rules.requiredEmail, rules.validEmail]"
+            :error-messages="
+              takenEmail ? 'The e-mail address has already been taken.' : ''
+            "
+            class="page-input"
+          ></v-text-field>
+          <v-text-field
+            label="Password *"
+            v-model="password"
+            :append-icon="!eyePassword ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="toggleEyePassword"
+            :type="!eyePassword ? 'text' : 'password'"
+            :rules="[
+              rules.requiredPassword,
+              rules.minLength,
+              rules.validPassword,
+              rules.matching(password, cfpassword),
+            ]"
+            class="page-input"
+          ></v-text-field>
+          <v-text-field
+            label="Confirm Password *"
+            v-model="cfpassword"
+            :append-icon="!eyeCfPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="toggleEyeCfPassword"
+            :type="!eyeCfPassword ? 'text' : 'password'"
+            class="page-input"
+          ></v-text-field>
+        </v-form>
+        <v-btn
+          @click="registerBtnClick"
+          class="page-input mt-5 mb-8 button-function"
+          color="blue"
+          ><span>REGISTER</span></v-btn
+        >
+      </v-card>
 
-    <v-img
-      alt="Masking Icon"
-      class="shrink mr-2"
-      contain
-      src="../assets/pic/insight-tec.png"
-      transition="scale-transition"
-      width="250"
-    />
-    <span>Copyright © 2020 Insight Technology Inc.</span>
+      <v-img
+        alt="Masking Icon"
+        class="shrink mt-16"
+        contain
+        src="../assets/pic/insight-tec.png"
+        transition="scale-transition"
+        width="200"
+      />
+      <span class="font-italic text-caption text--secondary"
+        >Copyright © 2020 Insight Technology Inc.</span
+      >
+    </v-container>
   </v-container>
 </template>
 
@@ -161,3 +195,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.button-navbar:hover {
+  background-color: rgba(211, 211, 211, 0.3);
+  color: blue;
+}
+</style>

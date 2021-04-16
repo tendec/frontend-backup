@@ -1,12 +1,83 @@
 <template>
-  <v-card>
-    <div class="d-flex">
-      <v-card-title>{{ data.name }}</v-card-title>
-      <v-icon @click="copyCard">mdi-content-copy</v-icon>
+  <v-card class="mt-5 mr-10" width="300px">
+    <div class="d-flex flex-column card-title">
+      <div class="d-flex">
+        <v-card-title class="text-subtitle-1 pb-0">{{
+          data.name
+        }}</v-card-title>
+        <v-dialog v-model="dialogCopy" persistent width="fit-content">
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              class="ml-auto mr-7 mt-5"
+              color="blue"
+              v-bind="attrs"
+              v-on="on"
+              >mdi-content-copy</v-icon
+            >
+          </template>
+          <v-card>
+            <v-card-title>Confirm</v-card-title>
+            <v-card-text
+              >Project <strong>{{ data.name }}</strong> is going to be copied.
+              Do you want to continue?</v-card-text
+            >
+            <v-card-actions>
+              <v-btn @click="dialogCopy = false" text class="ml-auto"
+                >CANCEL</v-btn
+              >
+              <v-btn
+                @click="
+                  copyCard();
+                  dialogCopy = false;
+                "
+                text
+                color="blue"
+                >OK</v-btn
+              >
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </div>
+      <v-card-subtitle class="pt-0 text-caption">{{
+        data.code
+      }}</v-card-subtitle>
     </div>
-    <v-card-subtitle>{{ data.code }}</v-card-subtitle>
-    <v-card-text>@{{ data.description }}@</v-card-text>
-    <v-btn @click="deleteCard">DELETE</v-btn>
+    <div class="d-flex flex-column">
+      <v-card-text>@{{ data.description }}@</v-card-text>
+      <v-dialog v-model="dialogDelete" persistent width="fit-content">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            text
+            color="black"
+            class="ml-auto mb-2 mr-3"
+            v-bind="attrs"
+            v-on="on"
+            >DELETE</v-btn
+          >
+        </template>
+        <v-card>
+          <v-card-title>Confirm</v-card-title>
+          <v-card-text
+            >Project <strong>{{ data.name }}</strong> is going to be removed.
+            Are you sure?</v-card-text
+          >
+          <v-card-actions>
+            <v-btn @click="dialogDelete = false" text class="ml-auto"
+              >CANCEL</v-btn
+            >
+            <v-btn
+              @click="
+                deleteCard();
+                dialogDelete = false;
+              "
+              text
+              color="blue"
+              >OK</v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
   </v-card>
 </template>
 
@@ -26,7 +97,10 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      dialogCopy: false,
+      dialogDelete: false,
+    };
   },
   methods: {
     copyCard() {
@@ -34,7 +108,11 @@ export default {
       let code = this.data.code;
       for (let i = 0; i < cards.length; i++) {
         if (cards[i].code == code) {
-          this.$store.commit("addNewCard", cards[i].name, cards[i].description);
+          this.$store.commit(
+            "addNewCard",
+            "Copy of " + cards[i].name,
+            cards[i].description
+          );
           this.$store.commit("saveData");
         }
       }

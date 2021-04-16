@@ -1,6 +1,6 @@
 <template>
-  <v-container>
-    <v-app-bar app color="white" dark>
+  <v-container class="container">
+    <v-app-bar app color="white" height="88px">
       <div class="d-flex align-center">
         <v-img
           alt="Masking Icon"
@@ -8,7 +8,7 @@
           contain
           src="../assets/pic/masking-icon.png"
           transition="scale-transition"
-          width="40"
+          width="50"
         />
 
         <v-img
@@ -16,74 +16,129 @@
           class="shrink mt-1 hidden-sm-and-down"
           contain
           src="../assets/pic/masking-title.png"
-          width="250"
+          width="300"
         />
       </div>
-      <v-btn to="/register">
-        <span>Project</span>
+      <v-btn
+        to="/main"
+        plain
+        class="text-capitalize button-navbar"
+        color="black"
+      >
+        <span>Projects</span>
       </v-btn>
-      <v-btn to="/register">
-        <span>Template</span>
+      <v-btn
+        to="/main"
+        plain
+        class="text-capitalize button-navbar"
+        color="black"
+      >
+        <span>Templates</span>
       </v-btn>
 
       <v-spacer></v-spacer>
 
-      <v-btn>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            icon
+            color="black"
+            class="button-navbar"
+            x-large
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon>mdi-help-circle-outline</v-icon>
+          </v-btn>
+        </template>
         <span>Help</span>
-      </v-btn>
-      <v-hover v-slot="{ hover }">
-        <div class="d-flex flex-column">
-          <div style="background: black">
+      </v-tooltip>
+      <v-menu open-on-hover offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <div v-bind="attrs" v-on="on" class="info-user button-navbar">
             {{ username }}
-            <v-icon>mdi-account</v-icon>
+            <v-icon color="black" large>mdi-account-circle</v-icon>
           </div>
-          <v-scroll-y-transition>
-            <v-btn v-if="hover"> <span>Profile</span> </v-btn>
-          </v-scroll-y-transition>
-          <v-scroll-y-transition>
-            <v-btn v-if="hover" @click="logoutBtnClick">
+        </template>
+        <v-list>
+          <v-list-item>
+            <v-btn text class="button-navbar"><span>Profile</span></v-btn>
+          </v-list-item>
+          <v-list-item>
+            <v-btn text class="button-navbar" @click="logoutBtnClick">
               <span>Logout</span>
             </v-btn>
-          </v-scroll-y-transition>
-        </div>
-      </v-hover>
-      <v-btn>
-        <span>Language</span>
-      </v-btn>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            plain
+            v-bind="attrs"
+            v-on="on"
+            class="text-capitalize button-navbar"
+            color="black"
+          >
+            Language
+            <v-icon>mdi-menu-down</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item>
+            <span>English</span>
+          </v-list-item>
+          <v-list-item>
+            <span>日本語</span>
+          </v-list-item>
+          <v-list-item>
+            <span>Tiếng Việt</span>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
 
-    <v-card>
-      <v-text-field
-        placeholder="Project name"
-        counter="100"
-        v-model="name"
-      ></v-text-field>
-      <v-text-field
-        placeholder="Project Description"
-        counter="500"
-        outlined
-        no-resize
-        v-model="description"
-      ></v-text-field>
-      <v-btn @click="resetInputValue">CANCEL</v-btn>
-      <v-btn @click="createBtnClick">CREATE</v-btn>
-    </v-card>
+    <v-container class="d-flex flex-column align-center">
+      <v-card class="mt-7 mb-5" width="600px" elevation="3">
+        <v-text-field
+          placeholder="Project name"
+          counter="100"
+          v-model="name"
+          class="ml-5 mr-5"
+        ></v-text-field>
+        <v-textarea
+          placeholder="Project Description"
+          counter="500"
+          outlined
+          no-resize
+          v-model="description"
+          class="ml-5 mr-5"
+          height="125px"
+        ></v-textarea>
+        <div class="d-flex justify-center mb-5">
+          <v-btn text @click="resetInputValue">CANCEL</v-btn>
+          <v-btn color="blue" class="button-function" @click="createBtnClick">CREATE</v-btn>
+        </div>
+      </v-card>
+    </v-container>
 
-    <div v-if="cardsLength > 3">
-      <span>Recent Projects</span>
+    <v-card v-if="cardsLength > 3" flat class="ml-7 mr-7 mb-10">
+      <v-card-subtitle class="pl-0 pb-1">Recent</v-card-subtitle>
       <hr />
       <div class="d-flex">
         <card v-for="card in cardsRecent" :key="card.code" :data="card" />
       </div>
-    </div>
-    <div>
-      <span>All Projects</span>
+    </v-card>
+    <v-card flat class="ml-7 mr-7">
+      <v-card-subtitle class="pl-0 pb-1">All Projects</v-card-subtitle>
       <hr />
-      <div class="d-flex">
+      <div class="d-flex mb-16">
         <card v-for="card in cards" :key="card.code" :data="card" />
       </div>
-      <span v-if="!cardsLength">Project not found!</span>
-    </div>
+      <div class="d-flex justify-center text-subtitle-2">
+        <span v-if="!cardsLength">Project not found!</span>
+      </div>
+    </v-card>
   </v-container>
 </template>
 
@@ -113,7 +168,7 @@ export default {
     },
     cardsRecent() {
       let cards = this.$store.state.activeUser.cards;
-      return cards.slice(cards.length - 3, cards.length)
+      return cards.slice(cards.length - 3, cards.length);
     },
   },
   methods: {
@@ -135,3 +190,19 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.container {
+  max-width: 100%;
+}
+.button-navbar:hover {
+  background-color: rgba(211, 211, 211, 0.3) !important;
+  color: blue !important;
+}
+.info-user {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 5px 5px 5px 10px;
+  color: black;
+}
+</style>
