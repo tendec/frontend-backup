@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import User from "../assets/class/user.js";
+import Card from "../assets/class/card.js";
 
 Vue.use(Vuex);
 
@@ -43,6 +44,10 @@ export default new Vuex.Store({
     },
     setActiveUser(state, user) {
       state.activeUser = user;
+    },
+    addNewCard(state, name, description) {
+      let card = new Card(name, description);
+      state.activeUser.cards.push(card);
     },
   },
   actions: {},
