@@ -132,7 +132,7 @@
     <v-card flat class="ml-7 mr-7">
       <v-card-subtitle class="pl-0 pb-1">All Projects</v-card-subtitle>
       <hr />
-      <div class="d-flex mb-16">
+      <div class="d-flex mb-16 flex-wrap">
         <card v-for="card in cards" :key="card.code" :data="card" />
       </div>
       <div class="d-flex justify-center text-subtitle-2">

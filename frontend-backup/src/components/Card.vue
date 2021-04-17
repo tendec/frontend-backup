@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mt-5 mr-10" width="300px">
+  <v-card class="mt-5 mr-7" width="255px" v-ripple>
     <div class="d-flex flex-column card-title">
       <div class="d-flex">
         <v-card-title class="text-subtitle-1 pb-0">{{
