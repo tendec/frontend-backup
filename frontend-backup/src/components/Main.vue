@@ -99,12 +99,12 @@
     </v-app-bar>
 
     <v-container class="d-flex flex-column align-center">
-      <v-card class="mt-7 mb-5" width="600px" elevation="3">
+      <v-card class="mt-7 mb-1 container-addCard" width="600px" elevation="3">
         <v-text-field
           placeholder="Project name"
           counter="100"
           v-model="name"
-          class="ml-5 mr-5"
+          class="ml-5 mr-5 mb-2 mt-2"
         ></v-text-field>
         <v-textarea
           placeholder="Project Description"
@@ -117,7 +117,7 @@
         ></v-textarea>
         <div class="d-flex justify-center mb-5">
           <v-btn text @click="resetInputValue">CANCEL</v-btn>
-          <v-btn color="blue" class="button-function" @click="createBtnClick">CREATE</v-btn>
+          <v-btn color="blue" class="button-function" :disabled="!project_info" @click="createBtnClick">CREATE</v-btn>
         </div>
       </v-card>
     </v-container>
@@ -170,6 +170,13 @@ export default {
       let cards = this.$store.state.activeUser.cards;
       return cards.slice(cards.length - 3, cards.length);
     },
+    project_info() {
+      if (this.name == "" || this.description == "") {
+        return false;
+      } else {
+        return true;
+      }
+    }
   },
   methods: {
     logoutBtnClick() {
@@ -194,6 +201,14 @@ export default {
 <style scoped>
 .container {
   max-width: 100%;
+}
+.container-addCard {
+  overflow: hidden;
+  height: 80px;
+  transition: height 0.3s linear;
+}
+.container-addCard:focus-within {
+  height: 300px;
 }
 .button-navbar:hover {
   background-color: rgba(211, 211, 211, 0.3) !important;

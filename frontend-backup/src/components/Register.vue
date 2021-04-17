@@ -67,6 +67,7 @@
               takenUsername ? 'The name has already been taken.' : ''
             "
             class="mt-8 page-input"
+            validate-on-blur
           ></v-text-field>
           <v-text-field
             type="email"
@@ -77,6 +78,7 @@
               takenEmail ? 'The e-mail address has already been taken.' : ''
             "
             class="page-input"
+            validate-on-blur
           ></v-text-field>
           <v-text-field
             label="Password *"
@@ -91,6 +93,7 @@
               rules.matching(password, cfpassword),
             ]"
             class="page-input"
+            validate-on-blur
           ></v-text-field>
           <v-text-field
             label="Confirm Password *"
@@ -99,6 +102,7 @@
             @click:append="toggleEyeCfPassword"
             :type="!eyeCfPassword ? 'text' : 'password'"
             class="page-input"
+            validate-on-blur
           ></v-text-field>
         </v-form>
         <v-btn

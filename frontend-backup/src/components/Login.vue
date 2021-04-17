@@ -67,6 +67,7 @@
               invalidEmail ? 'These credentials do not match our records.' : ''
             "
             class="mt-8 page-input"
+            validate-on-blur
           ></v-text-field>
           <v-text-field
             label="Password *"
@@ -79,6 +80,8 @@
               invalidPassword ? 'The password is incorrect.' : ''
             "
             class="page-input"
+            ref="password"
+            validate-on-blur
           ></v-text-field>
           <v-checkbox label="Remember Me" class="page-input mt-2"></v-checkbox>
         </v-form>
@@ -132,7 +135,7 @@ export default {
         let passwords = users.map((user) => user.password);
         if (index == -1) {
           this.invalidEmail = true;
-          this.password = "";
+          this.$refs.password.reset();
         } else {
           if (passwords[index] !== this.password) {
             this.invalidPassword = true;
