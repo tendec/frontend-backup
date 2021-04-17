@@ -98,52 +98,66 @@
       </v-menu>
     </v-app-bar>
 
-    <v-container class="d-flex flex-column align-center">
-      <v-card class="mt-7 mb-1 container-addCard" width="600px" elevation="3">
-        <v-text-field
-          placeholder="Project name"
-          counter="100"
-          v-model="name"
-          class="ml-5 mr-5 mb-2 mt-2"
-        ></v-text-field>
-        <v-textarea
-          placeholder="Project Description"
-          counter="500"
-          outlined
-          no-resize
-          v-model="description"
-          class="ml-5 mr-5"
-          height="125px"
-        ></v-textarea>
-        <div class="d-flex justify-center mb-5">
-          <v-btn text @click="resetInputValue">CANCEL</v-btn>
-          <v-btn color="blue" class="button-function" :disabled="!project_info" @click="createBtnClick">CREATE</v-btn>
+    <div class="container-projects">
+      <v-container class="d-flex flex-column align-center">
+        <v-card class="mt-7 mb-1 container-addCard" width="600px" elevation="3">
+          <v-text-field
+            placeholder="Project name"
+            counter="100"
+            v-model="name"
+            class="ml-5 mr-5 mb-2 mt-2"
+            autocomplete="off"
+          ></v-text-field>
+          <v-textarea
+            placeholder="Project Description"
+            counter="500"
+            outlined
+            no-resize
+            v-model="description"
+            class="ml-5 mr-5"
+            height="125px"
+          ></v-textarea>
+          <div class="d-flex justify-center mb-5">
+            <v-btn text @click="resetInputValue">CANCEL</v-btn>
+            <v-btn
+              color="blue"
+              class="button-function"
+              :disabled="!project_info"
+              @click="createBtnClick"
+              >CREATE</v-btn
+            >
+          </div>
+        </v-card>
+      </v-container>
+
+      <v-card v-if="cardsLength > 3" flat class="ml-7 mr-7 mb-10">
+        <v-card-subtitle class="pl-0 pb-1">Recent</v-card-subtitle>
+        <hr />
+        <div class="d-flex">
+          <cardComponent
+            v-for="card in cardsRecent"
+            :key="card.code"
+            :data="card"
+          />
         </div>
       </v-card>
-    </v-container>
-
-    <v-card v-if="cardsLength > 3" flat class="ml-7 mr-7 mb-10">
-      <v-card-subtitle class="pl-0 pb-1">Recent</v-card-subtitle>
-      <hr />
-      <div class="d-flex">
-        <card v-for="card in cardsRecent" :key="card.code" :data="card" />
-      </div>
-    </v-card>
-    <v-card flat class="ml-7 mr-7">
-      <v-card-subtitle class="pl-0 pb-1">All Projects</v-card-subtitle>
-      <hr />
-      <div class="d-flex mb-16 flex-wrap">
-        <card v-for="card in cards" :key="card.code" :data="card" />
-      </div>
-      <div class="d-flex justify-center text-subtitle-2">
-        <span v-if="!cardsLength">Project not found!</span>
-      </div>
-    </v-card>
+      <v-card flat class="ml-7 mr-7">
+        <v-card-subtitle class="pl-0 pb-1">All Projects</v-card-subtitle>
+        <hr />
+        <div class="d-flex mb-16 flex-wrap flex-reverse">
+          <cardComponent v-for="card in cards" :key="card.code" :data="card" />
+        </div>
+        <div class="d-flex justify-center text-subtitle-2">
+          <span v-if="!cardsLength">Project not found!</span>
+        </div>
+      </v-card>
+    </div>
   </v-container>
 </template>
 
 <script>
-import Card from "./Card.vue";
+import CardComponent from "./Card.vue";
+import CardClass from "../assets/class/card.js";
 
 export default {
   name: "Main",
@@ -154,7 +168,7 @@ export default {
     };
   },
   components: {
-    Card,
+    CardComponent,
   },
   computed: {
     username() {
@@ -168,7 +182,7 @@ export default {
     },
     cardsRecent() {
       let cards = this.$store.state.activeUser.cards;
-      return cards.slice(cards.length - 3, cards.length);
+      return cards.slice(0, 3);
     },
     project_info() {
       if (this.name == "" || this.description == "") {
@@ -176,7 +190,7 @@ export default {
       } else {
         return true;
       }
-    }
+    },
   },
   methods: {
     logoutBtnClick() {
@@ -189,7 +203,8 @@ export default {
       this.description = "";
     },
     createBtnClick() {
-      this.$store.commit("addNewCard", this.name, this.description);
+      let card = new CardClass(this.name, this.description);
+      this.$store.commit("addNewCard", card);
       this.name = "";
       this.description = "";
       this.$store.commit("saveData");
@@ -201,6 +216,10 @@ export default {
 <style scoped>
 .container {
   max-width: 100%;
+}
+.container-projects {
+  height: 700px;
+  overflow-y: scroll;
 }
 .container-addCard {
   overflow: hidden;

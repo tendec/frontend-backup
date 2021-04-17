@@ -28,9 +28,9 @@ export default {
 </script>
 
 <style>
-/* html, body {
+html, body {
   overflow-y: hidden !important;
-} */
+}
 * {
   font-family: "Noto Serif JP", serif;
 }
@@ -43,5 +43,20 @@ export default {
 }
 .button-function {
   color: white !important;
+}
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  height: 100%;
+  background-color: lightgray;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-button {
+  display: none;
 }
 </style>

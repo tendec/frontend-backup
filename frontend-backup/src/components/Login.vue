@@ -68,6 +68,7 @@
             "
             class="mt-8 page-input"
             validate-on-blur
+            @keyup.enter="loginBtnClick"
           ></v-text-field>
           <v-text-field
             label="Password *"
@@ -82,6 +83,7 @@
             class="page-input"
             ref="password"
             validate-on-blur
+            @keyup.enter="loginBtnClick"
           ></v-text-field>
           <v-checkbox label="Remember Me" class="page-input mt-2"></v-checkbox>
         </v-form>

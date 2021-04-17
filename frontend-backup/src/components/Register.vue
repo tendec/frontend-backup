@@ -68,6 +68,7 @@
             "
             class="mt-8 page-input"
             validate-on-blur
+            @keyup.enter="registerBtnClick"
           ></v-text-field>
           <v-text-field
             type="email"
@@ -79,6 +80,7 @@
             "
             class="page-input"
             validate-on-blur
+            @keyup.enter="registerBtnClick"
           ></v-text-field>
           <v-text-field
             label="Password *"
@@ -94,6 +96,7 @@
             ]"
             class="page-input"
             validate-on-blur
+            @keyup.enter="registerBtnClick"
           ></v-text-field>
           <v-text-field
             label="Confirm Password *"
@@ -103,6 +106,7 @@
             :type="!eyeCfPassword ? 'text' : 'password'"
             class="page-input"
             validate-on-blur
+            @keyup.enter="registerBtnClick"
           ></v-text-field>
         </v-form>
         <v-btn

@@ -1,17 +1,18 @@
 <template>
-  <v-card class="mt-5 mr-7" width="255px" v-ripple>
+  <v-card class="mt-5 mr-7" width="260px" v-ripple>
     <div class="d-flex flex-column card-title">
       <div class="d-flex">
-        <v-card-title class="text-subtitle-1 pb-0">{{
-          data.name
-        }}</v-card-title>
+        <v-card-title class="text-subtitle-2 pb-0 card-name"
+          ><strong>{{ data.name }}</strong></v-card-title
+        >
         <v-dialog v-model="dialogCopy" persistent width="fit-content">
           <template v-slot:activator="{ on, attrs }">
             <v-icon
-              class="ml-auto mr-7 mt-5"
+              class="ml-auto mr-5 mt-4"
               color="blue"
               v-bind="attrs"
               v-on="on"
+              small
               >mdi-content-copy</v-icon
             >
           </template>
@@ -38,12 +39,10 @@
           </v-card>
         </v-dialog>
       </div>
-      <v-card-subtitle class="pt-0 text-caption">{{
-        data.code
-      }}</v-card-subtitle>
+      <v-card-subtitle class="pt-0 card-code">{{ data.code }}</v-card-subtitle>
     </div>
     <div class="d-flex flex-column">
-      <v-card-text>@{{ data.description }}@</v-card-text>
+      <v-card-text class="card-desciption">{{ data.description }}</v-card-text>
       <v-dialog v-model="dialogDelete" persistent width="fit-content">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
@@ -83,7 +82,7 @@
 
 <script>
 export default {
-  name: "Card",
+  name: "CardComponent",
   props: {
     data: {
       type: Object,
@@ -130,3 +129,26 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.card-title {
+  background-color: rgba(211, 211, 211, 0.3);
+  height: 70px;
+}
+.card-name {
+  display: inline-block;
+  width: 222px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.card-code {
+  font-size: 10px;
+}
+.card-desciption {
+  width: 222px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+</style>
