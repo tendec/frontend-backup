@@ -219,7 +219,7 @@ export default {
 }
 .container-projects {
   height: 700px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .container-addCard {
   overflow: hidden;

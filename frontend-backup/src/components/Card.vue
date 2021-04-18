@@ -81,6 +81,8 @@
 </template>
 
 <script>
+import Card from "../assets/class/card.js";
+
 export default {
   name: "CardComponent",
   props: {
@@ -107,12 +109,10 @@ export default {
       let code = this.data.code;
       for (let i = 0; i < cards.length; i++) {
         if (cards[i].code == code) {
-          this.$store.commit(
-            "addNewCard",
-            "Copy of " + cards[i].name,
-            cards[i].description
-          );
+          let card = new Card("Copy of " + cards[i].name, cards[i].description);
+          this.$store.commit("addNewCard", card);
           this.$store.commit("saveData");
+          break;
         }
       }
     },
