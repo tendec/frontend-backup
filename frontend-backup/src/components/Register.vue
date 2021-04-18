@@ -67,7 +67,8 @@
               takenUsername ? 'The name has already been taken.' : ''
             "
             class="mt-8 page-input"
-            validate-on-blur
+            @blur="preventValidate"
+            @input="preventValidate"
             @keyup.enter="registerBtnClick"
           ></v-text-field>
           <v-text-field
@@ -79,7 +80,8 @@
               takenEmail ? 'The e-mail address has already been taken.' : ''
             "
             class="page-input"
-            validate-on-blur
+            @blur="preventValidate"
+            @input="preventValidate"
             @keyup.enter="registerBtnClick"
           ></v-text-field>
           <v-text-field
@@ -95,7 +97,8 @@
               rules.matching(password, cfpassword),
             ]"
             class="page-input"
-            validate-on-blur
+            @blur="preventValidate"
+            @input="preventValidate"
             @keyup.enter="registerBtnClick"
           ></v-text-field>
           <v-text-field
@@ -105,7 +108,8 @@
             @click:append="toggleEyeCfPassword"
             :type="!eyeCfPassword ? 'text' : 'password'"
             class="page-input"
-            validate-on-blur
+            @blur="preventValidate"
+            @input="preventValidate"
             @keyup.enter="registerBtnClick"
           ></v-text-field>
         </v-form>
@@ -199,6 +203,9 @@ export default {
     },
     toggleEyeCfPassword() {
       this.eyeCfPassword = !this.eyeCfPassword;
+    },
+    preventValidate() {
+      this.$refs.form.resetValidation();
     },
   },
 };

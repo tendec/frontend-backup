@@ -67,7 +67,9 @@
               invalidEmail ? 'These credentials do not match our records.' : ''
             "
             class="mt-8 page-input"
-            validate-on-blur
+            ref="email"
+            @blur="preventValidate"
+            @input="preventValidate"
             @keyup.enter="loginBtnClick"
           ></v-text-field>
           <v-text-field
@@ -82,7 +84,8 @@
             "
             class="page-input"
             ref="password"
-            validate-on-blur
+            @blur="preventValidate"
+            @input="preventValidate"
             @keyup.enter="loginBtnClick"
           ></v-text-field>
           <v-checkbox label="Remember Me" class="page-input mt-2"></v-checkbox>
@@ -139,6 +142,7 @@ export default {
           this.invalidEmail = true;
           this.$refs.password.reset();
         } else {
+          this.$refs.email.resetValidation();
           if (passwords[index] !== this.password) {
             this.invalidPassword = true;
             this.password = "";
@@ -154,6 +158,9 @@ export default {
     },
     toggleEye() {
       this.eye = !this.eye;
+    },
+    preventValidate() {
+      this.$refs.form.resetValidation();
     },
   },
 };

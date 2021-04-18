@@ -134,7 +134,7 @@
         <v-card-subtitle class="pl-0 pb-1">Recent</v-card-subtitle>
         <hr />
         <div class="d-flex">
-          <cardComponent
+          <cardRecentComponent
             v-for="card in cardsRecent"
             :key="card.code"
             :data="card"
@@ -158,6 +158,7 @@
 <script>
 import CardComponent from "./Card.vue";
 import CardClass from "../assets/class/card.js";
+import CardRecentComponent from "./Card-recent.vue";
 
 export default {
   name: "Main",
@@ -169,6 +170,7 @@ export default {
   },
   components: {
     CardComponent,
+    CardRecentComponent,
   },
   computed: {
     username() {
